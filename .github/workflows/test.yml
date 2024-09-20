@@ -68,7 +68,7 @@ jobs:
   # Deploy to staging
 
   deploy-staging:
-    if: github.event_name == 'push' && github.base_ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: build
     
