@@ -33,11 +33,6 @@ jobs:
 
       # - name: Build with dotnet
       #   run: dotnet build --configuration Release
-      
-      - name: Run build
-        run: |
-          echo "Building..."
-          exit 1  # Simulate a build failure
 
 # Check if the build failed
   stop-on-failure:
