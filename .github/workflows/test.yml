@@ -70,10 +70,11 @@ jobs:
 
       - name: Run a one-line script
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        run: |
           echo "Rollback",
           echo "SLOT=Rollback" >> $GITHUB_ENV
         
-  # Deploy to rollback
+  # Deploy
   
   deploy:
     runs-on: ubuntu-latest
