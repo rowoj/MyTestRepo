@@ -54,16 +54,16 @@ jobs:
     needs: build
     
     steps:
-      - name: Run a one-line script
+      - name: Set Staging Slot
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          echo "Staging",
+          echo "Staging"
           echo "DEPLOYMENT_SLOT=Staging" >> $GITHUB_ENV
 
-      - name: Run a one-line script
+      - name: Set Rollback Slot
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         run: |
-          echo "Rollback",
+          echo "Rollback"
           echo "DEPLOYMENT_SLOT=Rollback" >> $GITHUB_ENV
         
   # Deploy
@@ -73,7 +73,7 @@ jobs:
     needs: set-slot  
 
     steps:
-      - name: Run a one-line script
+      - name: Deploy
         run: echo $DEPLOYMENT_SLOT
 
     # Steps represent a sequence of tasks that will be executed as part of the job
