@@ -38,7 +38,9 @@ jobs:
         run: |
           echo "Rollback"
           echo "DEPLOYMENT_SLOT=Rollback" >> $GITHUB_ENV
-
+          
+      - name: Print GITHUB_ENV
+        run: cat $GITHUB_ENV
   deploy:
     runs-on: ubuntu-latest
     needs: set-slot
