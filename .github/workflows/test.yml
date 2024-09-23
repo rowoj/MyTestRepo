@@ -46,5 +46,8 @@ jobs:
     needs: set-slot
 
     steps:
+      - name: Print Environment Variables
+        run: env
+        
       - name: Deploy
-        run: echo "Deployment Slot: $DEPLOYMENT_SLOT"
+        run: echo $DEPLOYMENT_SLOT
