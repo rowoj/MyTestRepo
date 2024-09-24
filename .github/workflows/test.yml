@@ -44,21 +44,6 @@ jobs:
       - name: Print GITHUB_ENV
         run: cat $GITHUB_ENV
 
-      - name: Set output
-        run: echo "::set-output name=deployment_slot::${{ env.DEPLOYMENT_SLOT }}"
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: set-slot
-
-    steps:
-
-      - name: Print GITHUB_ENV
-        run: cat $GITHUB_ENV
-      
-      - name: Print Environment Variables
-        run: env
-
       - name: Deploy
-       # run: echo '${{ env.DEPLOYMENT_SLOT }}'
-        run: echo '${{ needs.set-slot.outputs.deployment_slot }}'
+        run: echo '${{ env.DEPLOYMENT_SLOT }}'
+
