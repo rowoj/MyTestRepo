@@ -43,7 +43,16 @@ jobs:
 
       - name: Print GITHUB_ENV
         run: cat $GITHUB_ENV
-
+        
+      - name: Check if ENV_VAR is empty or null
+        run: |
+          if [ -z "${{ env.ENV_VAR }}" ]; then
+            echo "ENV_VAR is empty or null"
+            exit 1
+          else
+            echo "ENV_VAR is set to ${{ env.ENV_VAR }}"
+          fi
+          
       - name: Deploy
         run: echo '${{ env.DEPLOYMENT_SLOT }}'
 
