@@ -46,11 +46,9 @@ jobs:
         
       - name: Check if ENV_VAR is empty or null
         run: |
-          if [ -z "${{ env.DEPLOYMENT_SLOT }}" ]; then
-            echo "DEPLOYMENT_SLOT is empty or null"
+          if [ -z "${{ env.DEPLOYMENT_SLOTs }}" ]; then
+            echo "DEPLOYMENT_SLOTs is empty or null"
             exit 1
-          else
-            echo "DEPLOYMENT_SLOT is set to ${{ env.DEPLOYMENT_SLOT }}"
           fi
           
       - name: Deploy
