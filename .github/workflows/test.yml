@@ -40,9 +40,6 @@ jobs:
           echo "Setting Rollback Slot"
           echo "DEPLOYMENT_SLOT=Rollback" >> $GITHUB_ENV
           echo "DEPLOYMENT_SLOT is set to Rollback"
-
-      - name: Print GITHUB_ENV
-        run: cat $GITHUB_ENV
         
       - name: Check if ENV_VAR is empty or null
         run: |
@@ -51,6 +48,9 @@ jobs:
             exit 1
           fi
           
+      - name: Print GITHUB_ENV
+        run: cat $GITHUB_ENV    
+        
       - name: Deploy
         run: echo '${{ env.DEPLOYMENT_SLOT }}'
 
