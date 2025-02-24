@@ -9,8 +9,6 @@ on:
       - development
   workflow_dispatch:
 
-# used for the file name
-
 env:
   FILE_NAME: ""
 
@@ -37,11 +35,15 @@ jobs:
           dotnet pack --configuration Release --no-build --output ./nupkg
           FILE_PATH=$(ls ./nupkg/*.nupkg)
           FILE_NAME=$(basename ${FILE_PATH})
-          echo "env.FILE_NAME=${FILE_NAME}" >> $GITHUB_ENV
-          echo "${{env.DOTNET_ROOT}}"
-          echo "${{env.FILE_NAME}}"
+          echo "FILE_NAME=${FILE_NAME}" >> $GITHUB_ENV
+          echo "${{ env.DOTNET_ROOT }}"
+          echo "${{ env.FILE_NAME }}"
+          
+      - name: Print updated environment variable
+        run: echo "Updated value of FILE_NAME: $FILE_NAME"
+        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: nuget-package
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{ env.DOTNET_ROOT }}/myapp
