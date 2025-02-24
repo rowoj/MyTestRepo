@@ -9,9 +9,6 @@ on:
       - development
   workflow_dispatch:
 
-env:
-  FILE_NAME: ""
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,7 +19,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.x.x'  # According to documentation, this supports the .NET Standard 2.0 library
+          dotnet-version: '6.x.x'
 
       - name: Restore dependencies
         run: dotnet restore
@@ -37,6 +34,9 @@ jobs:
           FILE_PATH=$(ls ./nupkg/*.nupkg)
           FILE_NAME=$(basename ${FILE_PATH})
           echo "FILE_NAME=${FILE_NAME}" >> $GITHUB_ENV
+        # Set the output for the build job
+        outputs:
+          FILE_NAME: ${{ steps.pack.outputs.FILE_NAME }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -51,9 +51,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download artifact from build job
+      - name: Download artifact from build job 
         uses: actions/download-artifact@v4
 
       - name: Print updated environment variable
-        run: |
-          echo "File Name: ${{ env.FILE_NAME }}"
+        run: echo "File Name - ${{ needs.build.outputs.FILE_NAME }}"
