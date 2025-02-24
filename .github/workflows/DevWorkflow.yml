@@ -36,6 +36,7 @@ jobs:
           FILE_PATH=$(ls ./nupkg/*.nupkg)
           FILE_NAME=$(basename ${FILE_PATH})
           echo "FILE_NAME=${FILE_NAME}" >> $GITHUB_ENV
+          echo "::set-output name=file_name::${FILE_NAME}"
           echo "${{ env.DOTNET_ROOT }}"
           echo "${{ env.FILE_NAME }}"
           
