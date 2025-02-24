@@ -37,9 +37,9 @@ jobs:
           dotnet pack --configuration Release --no-build --output ./nupkg
           FILE_PATH=$(ls ./nupkg/*.nupkg)
           FILE_NAME=$(basename ${FILE_PATH})
-          env.FILE_NAME=${FILE_NAME}
+          scho "env.FILE_NAME=${FILE_NAME}"
           echo "${{env.DOTNET_ROOT}}"
-    
+          echo "${{env.FILE_NAME}}"
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
