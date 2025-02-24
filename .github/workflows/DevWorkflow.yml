@@ -15,22 +15,23 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-     
+
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '6.x.x'  # According to documentation, this supports the .NET Standard 2.0 library
-    
+
       - name: Restore dependencies
         run: dotnet restore
-        
+
       - name: Build with dotnet
         run: dotnet build --configuration Release --no-restore
-    
+
       - name: Pack NuGet Package
+        id: pack
         run: |
           dotnet pack --configuration Release --no-build --output ./nupkg
           FILE_PATH=$(ls ./nupkg/*.nupkg)
@@ -39,28 +40,27 @@ jobs:
           echo "::set-output name=file_name::${FILE_NAME}"
           echo "${{ env.DOTNET_ROOT }}"
           echo "${{ env.FILE_NAME }}"
-          
+
       - name: Print updated environment variable
         run: |
           echo "File Name: ${{ env.FILE_NAME }}"
-        
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: nuget-package
           path: ${{ env.DOTNET_ROOT }}/myapp
-          
+
   deploy:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
 
       - name: Print updated environment variable
         run: |
           echo "File Name: ${{ needs.build.outputs.file_name }}"
-    
