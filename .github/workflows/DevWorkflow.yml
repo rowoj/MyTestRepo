@@ -40,7 +40,8 @@ jobs:
           echo "${{ env.FILE_NAME }}"
           
       - name: Print updated environment variable
-        run: echo "Updated value of FILE_NAME: $FILE_NAME"
+        run: |
+          echo "File Name: ${{ env.FILE_NAME }}"
         
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
