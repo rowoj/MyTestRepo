@@ -33,17 +33,16 @@ jobs:
           dotnet pack --configuration Release --no-build --output ./nupkg
           FILE_PATH=$(ls ./nupkg/*.nupkg)
           FILE_NAME=$(basename ${FILE_PATH})
-          echo "FILE_NAME=${FILE_NAME}" >> $GITHUB_ENV
-        # Set the output for the pack step
-        outputs:
-          FILE_NAME: ${{ steps.pack.outputs.FILE_NAME }}
+          echo "::set-output name=FILE_NAME::${FILE_NAME}"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: nuget-package
           path: ${{ env.DOTNET_ROOT }}/myapp
-
+    outputs:
+      FILE_NAME: ${{ steps.pack.outputs.FILE_NAME }}
+      
   deploy:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
