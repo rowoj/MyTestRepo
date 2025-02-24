@@ -61,5 +61,5 @@ jobs:
 
       - name: Print updated environment variable
         run: |
-          echo "File Name: ${{ env.FILE_NAME }}"
+          echo "File Name: ${{ needs.build.outputs.file_name }}"
     
