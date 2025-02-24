@@ -12,7 +12,7 @@ on:
 # used for the file name
 
 env:
-  FILE_NAME: Stahls.Api.Library
+  FILE_NAME: ""
 
 jobs:
   build:
