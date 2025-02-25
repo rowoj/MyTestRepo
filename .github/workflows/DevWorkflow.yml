@@ -32,8 +32,9 @@ jobs:
         run: |
           dotnet pack --configuration Release --no-build --output ./nupkg
           FILE_PATH=$(ls ./nupkg/*.nupkg)
-          FILE_NAME=$(basename ${FILE_PATH})
-          echo "::set-output name=FILE_NAME::${FILE_NAME}"
+          echo "File path - ${{ FILE_PATH }}"
+          BASE_FILE_NAME=$(basename ${FILE_PATH})
+          echo "FILE_NAME=${FILE_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
