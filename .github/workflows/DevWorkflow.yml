@@ -30,13 +30,17 @@ jobs:
       - name: Pack NuGet Package
         id: pack
         run: |
-          dotnet pack --configuration Release --no-build --output ./nupkg
-          FILE_PATH=$(ls ./nupkg/*.nupkg)
+          dotnet pack --configuration Release --no-build
+          FILE_PATH=$(ls ./bin/Release/*.nupkg)
           BASE_FILE_NAME=$(basename ${FILE_PATH})
           echo "FILE_NAME=${BASE_FILE_NAME}" >> "$GITHUB_OUTPUT"
+          echo "FILE_PATH=${FILE_PATH}" >> "$GITHUB_OUTPUT"
 
       - name: Print File Name
         run: echo "File Name - ${{ENV.FILE_NAME}}"
+
+      - name: Print Folder Name
+        run: echo "Folder Name - ${{ENV.FILE_PATH}}"
         
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
